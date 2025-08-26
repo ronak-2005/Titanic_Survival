@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Titanic Survival Predictor</title>
+</head>
+<body>
+    <h2>Titanic Survival Batch Prediction</h2>
+
+    <form id="csvForm" action="/predict_csv" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload & Predict</button>
+    </form>
+
+    <hr>
+    <h3>Prediction Results:</h3>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("csvForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append("file", e.target.file.files[0]);
+
+            const response = await fetch("/predict_csv", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            let html = "<table border='1' cellpadding='5'><tr>";
+            for (const key in data.predictions[0]) {
+                html += `<th>${key}</th>`;
+            }
+            html += "</tr>";
+
+            data.predictions.forEach(row => {
+                html += "<tr>";
+                for (const key in row) {
+                    html += `<td>${row[key]}</td>`;
+                }
+                html += "</tr>";
+            });
+
+            html += "</table>";
+            document.getElementById("results").innerHTML = html;
+        });
+    </script>
+</body>
+</html>
