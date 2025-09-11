@@ -12,8 +12,22 @@ MAX_ROWS = 10000
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 templates = Jinja2Templates(directory="templates")
 
-# Load model
-model = joblib.load(os.path.join(BASE_DIR, "titanic.pkl"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH_RENDER = "/mnt/data/titanic.pkl"
+MODEL_PATH_LOCAL = os.path.join(BASE_DIR, "titanic.pkl")
+
+if os.path.exists(MODEL_PATH_RENDER):
+    model_path = MODEL_PATH_RENDER
+elif os.path.exists(MODEL_PATH_LOCAL):
+    model_path = MODEL_PATH_LOCAL
+else:
+    raise FileNotFoundError(
+        f"Model file not found in either Render disk ({MODEL_PATH_RENDER}) "
+        f"or local directory ({MODEL_PATH_LOCAL})"
+    )
+
+model = joblib.load(model_path)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):

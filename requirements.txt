@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 anyio
 xgboost
 matplotlib
 seaborn
+=======
+>>>>>>> 06cc1e3 (Ready)
 fastapi
 uvicorn
 pandas
