@@ -1,12 +1,12 @@
-
 anyio
 xgboost
 matplotlib
 seaborn
-fastapi
-uvicorn
-pandas
 numpy
 joblib
 jinja2
-scikit-learn
+pandas==2.2.3
+scikit-learn==1.5.1
+fastapi==0.115.0
+uvicorn==0.30.6
+python-multipart==0.0.9
